@@ -1,0 +1,20 @@
+Notebook 1: Random Forest
+Perform forward selection (or backward elimination) with Random Forest.
+Use metrics like MSE and AIC to select the best features.
+Tune hyperparameters using Grid Search, Random Search, or Bayesian Optimization.
+Identify the top 3 Random Forest models based on their performance.
+
+Notebook 2: XGBoost
+Conduct feature selection tailored to XGBoost’s strengths (e.g., use XGBoost's built-in feature importance).
+Optimize hyperparameters such as learning rate, tree depth, and regularization terms.
+Save the top 3 XGBoost models for comparison.
+
+Notebook 3: LSTM
+Engineer sequences (sliding windows) and perform feature selection tailored to temporal patterns.
+Optimize hyperparameters like the number of neurons, layers, sequence length, and dropout rates.
+Save the top 3 LSTM models with the best prediction performance.
+
+Notebook 4: Model Comparison
+Compare the top 9 models (3 from each type) using validation metrics.
+Test the top 3 overall models on a real-world paper trading account.
+Evaluate their actual performance in terms of profitability and robustness.
