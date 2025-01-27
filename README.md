@@ -48,7 +48,7 @@ cd MoneyBot
 ### 2. Install dependencies
 Install dependancies from requirements.txt file
 
-### 4. Set up Environment Variables
+### 3. Set up Environment Variables
 You will need a Alpha Vantage API key saved in a .env file in the `config` directory
 
 
@@ -86,7 +86,7 @@ Models were evaluated on:
 - Mean Absolute Error (MAE)  
 - R² Score  
 
-A weighted scoring system (33.33% each) identified **Random Forest** as the best model with a weighted score of **0.95**.
+A weighted scoring system (33.33% each) identified **Random Forest** as the best model with a weighted score of **0.99**.
 
 ---
 

@@ -31,7 +31,7 @@ def run_live(scraper, model, ticker):
         prediction = model.predict(data)
         pred_accuracy = model.pred_confidence(close_timer)
         log_update(data, close_timer, prediction, pred_accuracy)
-        time.sleep(15)
+        time.sleep(180)
         
         
 def update_data(scraper, ticker, max_retries=3, retry_delay=5):
