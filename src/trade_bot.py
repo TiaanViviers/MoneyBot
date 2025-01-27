@@ -118,14 +118,31 @@ class TradeBot:
         return self.inverse_scale(prediction)
     
 
-    def get_pred_accuracy(self):
+    def pred_confidence(self, time_to_close):
         """
-        Placeholder for getting prediction accuracy.
+        Calculate how confident we are in the daily close prediction based on
+        how much time is left until the daily candle closes.
+
+        Args:
+            time_to_close (str): Time remaining in HH:MM:SS format (e.g. "10:29:38").
 
         Returns:
-            None
+            float: Confidence in percent (0.0 to 100.0).
         """
-        pass
+        h, m, s = time_to_close.split(":")
+        hours = int(h)
+        minutes = int(m)
+        seconds = int(s)
+
+        #Convert to total seconds
+        remaining_secs = hours * 3600 + minutes * 60 + seconds
+        daily_session_secs = 86400
+
+        #Calculate confidence as a ratio of how much of the day has elapsed
+        elapsed_ratio = 1.0 - (remaining_secs / daily_session_secs)
+        confidence_percent = max(0.0, min(100.0, elapsed_ratio * 100))
+
+        return round(confidence_percent, 2)
     
     
 #Test client

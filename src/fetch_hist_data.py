@@ -5,38 +5,30 @@ import pandas as pd
 from alpha_vantage.foreignexchange import ForeignExchange
 
 
-def main():
-    if len(sys.argv) != 3:
-        print("""Insufficient command line arguments!
-        Please provide command line arguments in this format:
-                    1- filename data must be saved to, e.g. eur_usd_data
-                    2- Symbol/ticker e.g. EURUSD
-            """)
-        sys.exit()
-    else:
-        api_key = load_env()
-        file_name = sys.argv[1]
-        symbol = sys.argv[2]
-        print(file_exists(file_name))
-        if file_exists(file_name):
-            if symbol.upper() == 'EURUSD':
-                last_date = read_last_date(file_name)
-                data = fetch_alpha_vantage_data(api_key, symbol, last_date)
-                save_csv(file_name, data, append=True)
-                return
-            
-            else:
-                print("Symbol is currently not supported, sorry!")
-                sys.exit()
+def get_hist_data(file_name, symbol):
+    api_key = load_env()
+    file_name = sys.argv[1]
+    symbol = sys.argv[2]
+    print(file_exists(file_name))
+    if file_exists(file_name):
+        if symbol.upper() == 'EURUSD':
+            last_date = read_last_date(file_name)
+            data = fetch_alpha_vantage_data(api_key, symbol, last_date)
+            save_csv(file_name, data, append=True)
+            return
         
         else:
-            if symbol.upper() == 'EURUSD':
-                data = fetch_alpha_vantage_data(api_key, symbol)
-                save_csv(file_name, data)
-                return
-            else:
-                print("Symbol is currently not supported, sorry!")
-                sys.exit()
+            print("Symbol is currently not supported, sorry!")
+            sys.exit()
+    
+    else:
+        if symbol.upper() == 'EURUSD':
+            data = fetch_alpha_vantage_data(api_key, symbol)
+            save_csv(file_name, data)
+            return
+        else:
+            print("Symbol is currently not supported, sorry!")
+            sys.exit()
         
 
 
@@ -166,4 +158,15 @@ def save_csv(file_name, data, append=None):
         
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 3:
+        print("""Insufficient command line arguments!
+        Please provide command line arguments in this format:
+                    1- filename data must be saved to, e.g. eur_usd_data
+                    2- Symbol/ticker e.g. EURUSD
+            """)
+        sys.exit()
+    
+    else:
+        file_name = sys.argv[1]
+        symbol = sys.argv[2]
+        get_hist_data(file_name, symbol)
