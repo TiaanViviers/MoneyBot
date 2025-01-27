@@ -6,9 +6,29 @@ from alpha_vantage.foreignexchange import ForeignExchange
 
 
 def get_hist_data(file_name, symbol):
+    """
+    Fetches and updates historical data for a given symbol.
+
+    This function checks if the specified file containing historical data exists. If the file exists,
+    it fetches new data starting from the last date present in the file and appends it
+    to the existing data. If the file does not exist, it fetches the full historical data
+    and saves it to a new file. Currently, only the EURUSD symbol is supported.
+
+    Args:
+        file_name (str): The name of the file (excluding the path) to save or update with historical data. 
+                        It is assumed to be located in the "../data/raw/" directory.
+        symbol (str): The trading symbol (e.g., 'EURUSD') for which to fetch historical data.
+
+    Returns:
+        None
+
+    Notes:
+        - The function is designed specifically for Alpha Vantage's API structure and assumes 
+        supporting functions (`load_env`, `file_exists`, `read_last_date`, `fetch_alpha_vantage_data`, 
+        and `save_csv`) are available in the module.
+        - The `EURUSD` symbol is case-insensitive.
+"""
     api_key = load_env()
-    file_name = sys.argv[1]
-    symbol = sys.argv[2]
     print(file_exists(file_name))
     if file_exists(file_name):
         if symbol.upper() == 'EURUSD':
@@ -29,7 +49,6 @@ def get_hist_data(file_name, symbol):
         else:
             print("Symbol is currently not supported, sorry!")
             sys.exit()
-        
 
 
 def fetch_alpha_vantage_data(api_key, symbol, from_date=None):

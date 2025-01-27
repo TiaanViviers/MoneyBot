@@ -1,5 +1,6 @@
 from yahoo_scrape import YahooFinScrape
 from trade_bot import TradeBot
+from periodic_retrain import retrain
 import time
 import sys
 from datetime import datetime
@@ -14,7 +15,7 @@ def main():
             python/python3 main.py <retrain> for automatic model retraining
             """)
     if sys.argv[1].lower() == "retrain":
-        print("coming soon..")
+        retrain()
         sys.exit()
     else:
         ticker = set_ticker(sys.argv[1])

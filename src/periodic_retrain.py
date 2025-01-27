@@ -7,9 +7,26 @@ import joblib
 
 
 def retrain():
+    """
+Retrains the Random Forest model on the updated dataset.
+
+This function updates the training dataset with the latest available data, scales the dataset, 
+and retrains the Random Forest model using the scaled data. The retrained model and scaler are saved 
+for deployment.
+
+Steps:
+1. Fetches the latest historical data and appends it to the existing dataset.
+2. Loads the updated dataset from a specified CSV file.
+3. Scales the dataset and saves the scaler for use in predictions.
+4. Retrains the Random Forest model using the scaled data and saves the updated model.
+
+Exceptions:
+    Raises exceptions if any step of the retraining process fails, such as file I/O errors 
+    or model training errors.
+"""
     #update training set with latest data
     print("Updating training data...")
-    get_hist_data("eur_usd_data.csv", "EURUSD")
+    get_hist_data("eur_usd_data", "EURUSD")
     
     #load the new csv file
     data = pd.read_csv("../data/raw/eur_usd_data.csv", parse_dates=["date"], index_col="date")
@@ -26,6 +43,20 @@ def retrain():
     
     
 def scale_df(data):
+    """
+Scales the dataset and saves the scaler for deployment.
+
+This function standardizes the features in the dataset.
+It saves the scaler for use in predictions during deployment. The target variable 
+is included in scaling to maintain consistency with the training pipeline.
+
+Args:
+    data (pd.DataFrame): The input dataset to scale. Each column is treated as a feature.
+
+Returns:
+    pd.DataFrame: A DataFrame containing the scaled features, with the same structure as the input data.
+
+"""
     scaler = StandardScaler()
     #scale training data
     scaled_train = scaler.fit_transform(data)
@@ -37,6 +68,7 @@ def scale_df(data):
     joblib.dump(scaler, scaler_path)
     
     return scaled_train
+
 
 def fit_model(data, save_path="../models/EURUSD_daily/rf_model_full_138.joblib"):
     """
